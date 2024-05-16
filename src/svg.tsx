@@ -203,7 +203,6 @@ export async function generateSVG({
         rx={rx || 0}
       />
       {iconContents && (
-        <use href={"#circle"} />
         <use
           width={iconW}
           height={iconH}
