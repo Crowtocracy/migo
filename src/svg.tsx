@@ -227,13 +227,13 @@ export async function generateSVG({
         <text
           {...{
             id: "title",
-            x: {+width / 2},
-            y: {+height / 2},
+            x: +width / 2,
+            y: +height / 2,
             "font-size": titleFontSize,
             "font-family": decode(titleFontFamily),
             "font-weight": titleFontWeight,
-            fill: {"#0D9488"},
-            color: {"#0D9488"},
+            fill: "#0D9488",
+            color: "#0D9488",
             stroke: titleStroke,
             "stroke-width": +titleStrokeWidth,
             "text-anchor": titleTextAnchor,
