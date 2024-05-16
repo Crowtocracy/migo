@@ -142,8 +142,11 @@ export class Params extends URLSearchParams {
         this.pattern.params.test(value)
       ) {
         const params = value.split(this.pattern.groups) ?? [];
+        console.log("params in parse", params);
         for (const param of params) {
           const [key, val] = param.split(this.pattern.values);
+          console.log("key,val", key, val);
+
           init.append(key, val);
         }
       }
