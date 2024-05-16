@@ -1,6 +1,6 @@
-export const DEBUG = (Deno.env.get("DEBUG") ?? false);
+export const DEBUG = Deno.env.get("DEBUG") ?? false;
 
-export const DEV = (Deno.env.get("DENO_DEPLOYMENT_ID") === undefined) || DEBUG;
+export const DEV = Deno.env.get("DENO_DEPLOYMENT_ID") === undefined || DEBUG;
 
 /**
  * Used as the base for all icon requests.
@@ -25,12 +25,9 @@ export { YEAR as TTL_1Y };
  */
 export const CACHING: Record<string, string> = {
   none: "public, no-cache, no-store, s-maxage=0, max-age=0, must-revalidate",
-  short:
-    `public, s-maxage=1800, max-age=1800, stale-if-error=120, stale-while-revalidate=60`,
-  medium:
-    `public, s-maxage=86400, max-age=86400, stale-if-error=900, stale-while-revalidate=120`,
-  long:
-    `public, s-maxage=${YEAR}, max-age=${YEAR}, stale-if-error=3600, stale-while-revalidate=300, immutable`,
+  short: `public, s-maxage=1800, max-age=1800, stale-if-error=120, stale-while-revalidate=60`,
+  medium: `public, s-maxage=86400, max-age=86400, stale-if-error=900, stale-while-revalidate=120`,
+  long: `public, s-maxage=${YEAR}, max-age=${YEAR}, stale-if-error=3600, stale-while-revalidate=300, immutable`,
 } as const;
 
 export const CACHE_NAME = "migo.deno.dev";
@@ -41,8 +38,8 @@ export { CACHE_NAME as cacheName, CACHING as cacheTerm };
  * Default Param values for the handle.image() function
  */
 export const defaultParams = {
-  title: "Edge-rendered OpenGraph Images with Deno",
-  subtitle: "migo.deno.dev",
+  title: "",
+  subtitle: "",
   width: "1280",
   height: "640",
   pxRatio: "1.5",
@@ -59,7 +56,7 @@ export const defaultParams = {
  * Metadata for SEO
  */
 export const site = {
-  ...{
+  ...({
     url: "https://migo.deno.dev",
     title: "Edge-rendered OpenGraph Images · migo",
     author: "Nicholas Berlette",
@@ -72,7 +69,7 @@ export const site = {
     banner:
       "/image.png?title=migo.deno.dev&subtitle=Generate+dynamic+images+on+the+Edge&bgColor=111827&titleColor=fff&subtitleColor=aaa&pxRatio=1.5&borderRadius=15&width=1000&height=400&iconW=240&iconH=240&iconX=-10&iconY=180&titleFontSize=88&titleFontFamily=serif&titleFontWeight=100&titleX=300&titleTextAnchor=left&titleY=320&subtitleY=130&subtitleFontFamily=monospace&subtitleFontSize=40&icon=game-icons:sauropod-head",
     repository: "https://github.com/nberlette/migo",
-  } as const,
+  } as const),
 };
 
 export const styles = [
@@ -83,7 +80,7 @@ export const styles = [
  * Document `<meta>` tags added in the page `<head>`
  */
 export const meta: Meta = {
-  ...{
+  ...({
     viewport: "width=device-width, initial-scale=1.0",
     title: site.title,
     author: site.author,
@@ -103,7 +100,7 @@ export const meta: Meta = {
     "twitter:creator": site.author,
     "twitter:image:src": site.image,
     "theme-color": "#112233",
-  } as const,
+  } as const),
 };
 
 /**
@@ -169,7 +166,7 @@ export const paramList = [
  * @see {@link https://uno.antfu.me}
  */
 export const shortcuts = {
-  ...{
+  ...({
     "btn-large":
       "bg-black text-white inline-flex flex-row flex-nowrap gap-x-3 place-items-center py-1.5 sm:py-2 md:py-2.5 px-4 sm:px-5 md:px-6 mt-6 mb-5 sm:mt-7 sm:mb-6 md:mt-10 md:mb-9 rounded-full ring-2 ring-blue-gray-900 dark:ring-blue-gray-50 hover:!bg-white hover:!text-blue-gray-900 dark:hover:!ring-white shadow-sm hover:shadow-xl hover:animate-pulse-alt !animate-duration-2s transition-all duration-500 ease-in-out tracking-tight whitespace-nowrap break-normal",
     "btn-icon":
@@ -197,5 +194,5 @@ export const shortcuts = {
     "param-value": "param-base font-medium cursor-pointer",
     "param-other":
       "param-base font-light !underline-0 !no-underline !text-gray-900 dark:!text-gray-50",
-  } as const,
+  } as const),
 };
