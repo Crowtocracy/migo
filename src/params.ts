@@ -357,9 +357,7 @@ export function collectParams<
 
   is.assert.plainObject<string>(pathParams);
 
-  const pathParamsArray = pathParams.params.split("=");
-  pathParams[pathParamsArray[0]] = pathParamsArray[1];
-
+  console.log("pathParams", pathParams);
   // janky way to fix some routing issues
   if (pathParams.params == null) {
     if (
