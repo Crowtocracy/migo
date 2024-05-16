@@ -228,7 +228,8 @@ export async function generateSVG({
           {...{
             id: "title",
             x: +width / 2,
-            y: +height / 2 + 192 / 2,
+            y: +height / 2,
+            dy: "0.35em",
             "font-size": 192,
             "font-family": "sans-serif",
             "font-weight": titleFontWeight,
@@ -236,8 +237,7 @@ export async function generateSVG({
             color: "#0D9488",
             stroke: titleStroke,
             "stroke-width": +titleStrokeWidth,
-            "text-anchor": titleTextAnchor,
-            dominantBaseline: "middle",
+            "text-anchor": "middle",
           }}
         >
           <tspan>SIV</tspan>
