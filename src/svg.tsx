@@ -13,17 +13,16 @@ import {
 import { adjustViewBoxValue, Params, sanitizeIcon } from "./utils.ts";
 import { CDN_URL, defaultParams, FALLBACK_ICON_URL } from "./constants.ts";
 
-const createIconUrl = (icon: string) => (
+const createIconUrl = (icon: string) =>
   icon.startsWith("http")
     ? new URL(icon).href
     : icon.startsWith("data:")
     ? decode(icon)
-    : new URL(`/${icon.replace(/\.svg\?.*$/i, "")}.svg`, CDN_URL).href
-);
+    : new URL(`/${icon.replace(/\.svg\?.*$/i, "")}.svg`, CDN_URL).href;
 
 export async function generateIcon(
   iconUrl: string | URL,
-  properties?: IconProps,
+  properties?: IconProps
 ): Promise<any> {
   const {
     iconW: width = 240,
@@ -37,7 +36,8 @@ export async function generateIcon(
 
   is.assert.url(iconUrl);
 
-  let iconContents = "", iconViewBox = viewBox;
+  let iconContents = "",
+    iconViewBox = viewBox;
   let external = false;
   const url = new URL(String(iconUrl));
   url.search = "";
@@ -76,8 +76,8 @@ export async function generateIcon(
       /(?<=viewBox=['"])([^'"]+?)(?=['"])/i,
       (m) => (
         (iconViewBox = viewBox || adjustViewBoxValue(m, +strokeWidth)),
-          iconViewBox
-      ),
+        iconViewBox
+      )
     );
   }
 
@@ -100,27 +100,27 @@ export async function generateSVG({
     title,
     subtitle,
     width = "1280",
-    height = (+width / 2),
+    height = +width / 2,
     viewBox = `0 0 ${width} ${height}`,
     bgColor: fill = "#fff",
     pxRatio = "2",
     borderRadius: rx = "0",
     iconW = "240",
     iconH = iconW,
-    iconX = ((+width - +iconW) / 2),
-    iconY = (+iconH / 3),
+    iconX = (+width - +iconW) / 2,
+    iconY = +iconH / 3,
     iconStroke = "none",
     iconStrokeWidth = "0",
     titleFontSize = "48",
     titleFontFamily = "serif",
     titleFontWeight = "bold",
-    titleX = (+width / 2),
-    titleY = ((+iconH) + (+iconY * 2) + (+titleFontSize * 1)),
+    titleX = +width / 2,
+    titleY = +iconH + +iconY * 2 + +titleFontSize * 1,
     subtitleFontSize = "32",
     subtitleFontFamily = "monospace",
     subtitleFontWeight = "normal",
-    subtitleX = (+width / 2),
-    subtitleY = (+titleY + (+subtitleFontSize * 2)),
+    subtitleX = +width / 2,
+    subtitleY = +titleY + +subtitleFontSize * 2,
     titleColor = "#123",
     titleStroke = "none",
     titleStrokeWidth = "0",
@@ -142,11 +142,11 @@ export async function generateSVG({
 
   let iconColor = params.get("iconColor") ?? titleColor;
   let iconType = "svg";
-
+  console.log('params.get("icon")', params.get("icon"));
   const iconUrl = createIconUrl(
     decode(
-      params.get("iconUrl") ?? params.get("icon") ?? "game-icons:sauropod-head",
-    ),
+      params.get("iconUrl") ?? params.get("icon") ?? "game-icons:sauropod-head"
+    )
   );
 
   const iconContents = await generateIcon(iconUrl, {
@@ -157,7 +157,7 @@ export async function generateSVG({
     iconH,
   } as any);
 
-  if (/(\.svg|^data[:]image\/svg\+xml)/ig.test(new URL(iconUrl).href)) {
+  if (/(\.svg|^data[:]image\/svg\+xml)/gi.test(new URL(iconUrl).href)) {
     iconType = "svg";
   }
 
@@ -250,11 +250,15 @@ export async function generateSVG({
     </svg>
   );
 
-  const DEV = (Deno.env.get("DENO_DEPLOYMENT_ID") === undefined);
+  const DEV = Deno.env.get("DENO_DEPLOYMENT_ID") === undefined;
 
-  return renderToString(svg, {}, {
-    pretty: DEV,
-    shallow: true,
-    xml: true,
-  });
+  return renderToString(
+    svg,
+    {},
+    {
+      pretty: DEV,
+      shallow: true,
+      xml: true,
+    }
+  );
 }
