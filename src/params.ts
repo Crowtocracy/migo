@@ -392,7 +392,10 @@ export function collectParams<
    * for maximum compatibility and flexibility with different requests.
    */
   console.log("pathParams.params", pathParams.params);
-  const pathParameters = new Params(decode(pathParams?.params));
+  const pathParamsArray = pathParams.params.split("=");
+  const pathParameters = new Params({
+    [pathParamsArray[0]]: pathParamsArray[1],
+  });
   const mergedParams = {
     ...defaultParams,
     ...pathParams,
