@@ -99,8 +99,8 @@ export async function generateSVG({
   console.log("params.toJSON()", params.toJSON());
   console.log("mergedParams", mergedParams);
   const {
-    title,
-    subtitle,
+    title = "",
+    subtitle = "",
     width = "1280",
     height = +width / 2,
     viewBox = `0 0 ${width} ${height}`,
@@ -213,44 +213,50 @@ export async function generateSVG({
           {...iconProps}
         />
       )}
-      <g>
-        <text
-          {...{
-            id: "title",
-            x: titleX,
-            y: titleY,
-            "font-size": titleFontSize,
-            "font-family": decode(titleFontFamily),
-            "font-weight": titleFontWeight,
-            fill: titleColor,
-            color: titleColor,
-            stroke: titleStroke,
-            "stroke-width": +titleStrokeWidth,
-            "text-anchor": titleTextAnchor,
-            dominantBaseline: "middle",
-          }}
-        >
-          <tspan>{decode(title!)}</tspan>
-        </text>
-        <text
-          {...{
-            id: "subtitle",
-            x: subtitleX,
-            y: subtitleY,
-            "font-size": subtitleFontSize,
-            "font-family": decode(subtitleFontFamily),
-            "font-weight": subtitleFontWeight,
-            fill: subtitleColor,
-            color: subtitleColor,
-            stroke: subtitleStroke,
-            "stroke-width": subtitleStrokeWidth,
-            "text-anchor": subtitleTextAnchor,
-            dominantBaseline: "middle",
-          }}
-        >
-          <tspan>{decode(subtitle!)}</tspan>
-        </text>
-      </g>
+      {(title || subtitle) && (
+        <g>
+          {title && (
+            <text
+              {...{
+                id: "title",
+                x: titleX,
+                y: titleY,
+                "font-size": titleFontSize,
+                "font-family": decode(titleFontFamily),
+                "font-weight": titleFontWeight,
+                fill: titleColor,
+                color: titleColor,
+                stroke: titleStroke,
+                "stroke-width": +titleStrokeWidth,
+                "text-anchor": titleTextAnchor,
+                dominantBaseline: "middle",
+              }}
+            >
+              <tspan>{decode(title!)}</tspan>
+            </text>
+          )}
+          {subtitle && (
+            <text
+              {...{
+                id: "subtitle",
+                x: subtitleX,
+                y: subtitleY,
+                "font-size": subtitleFontSize,
+                "font-family": decode(subtitleFontFamily),
+                "font-weight": subtitleFontWeight,
+                fill: subtitleColor,
+                color: subtitleColor,
+                stroke: subtitleStroke,
+                "stroke-width": subtitleStrokeWidth,
+                "text-anchor": subtitleTextAnchor,
+                dominantBaseline: "middle",
+              }}
+            >
+              <tspan>{decode(subtitle!)}</tspan>
+            </text>
+          )}
+        </g>
+      )}
     </svg>
   );
 
