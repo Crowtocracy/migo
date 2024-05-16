@@ -41,7 +41,6 @@ const handle = {
     try {
       const url = new URL(req.url);
       const type = pathParams?.type ?? "png";
-      console.log("type", type);
       // ensure the type is only svg or png. default to png otherwise
       if (!["png", "svg"].includes(type)) {
         const newUrl = new URL(url);
