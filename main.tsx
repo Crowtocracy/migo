@@ -50,6 +50,9 @@ const handle = {
         );
         return Response.redirect(newUrl, 301);
       }
+      if (pathParams?.fallback) {
+        pathParams.fallback = pathParams.fallback.replace(/\/(png|svg)$/, "");
+      }
       console.log("pathParams from beginning", pathParams);
       // use a normalized set of parameters for more aggressive caching
       const params = collectParams(url, pathParams);
