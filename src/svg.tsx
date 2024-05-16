@@ -44,6 +44,7 @@ export async function generateIcon(
   iconUrl = url.href;
   console.log("iconUrl", iconUrl);
   if (iconUrl.includes("siv:logo")) {
+    console.log("sivLogo found");
     return (
       <defs>
         <symbol id="icon" viewBox={viewBox} image-rendering="optimizeQuality">
