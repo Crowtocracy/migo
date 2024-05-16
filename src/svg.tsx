@@ -143,7 +143,7 @@ export async function generateSVG({
     }
   }
 
-  let iconColor = params.get("iconColor") ?? titleColor;
+  let iconColor = params.get("iconColor") ?? "#0D9488";
   let iconType = "svg";
 
   const iconUrl = createIconUrl(
