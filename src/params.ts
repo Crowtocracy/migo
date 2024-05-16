@@ -57,7 +57,7 @@ export class Params extends URLSearchParams {
     entries:
       | readonly (readonly string[])[]
       | readonly (readonly [string, string])[]
-      | Iterable<readonly [string, string]>
+      | Iterable<readonly [string, string]>,
   );
   constructor(initial: Record<string, string>);
   constructor(...params: Params.Init[]);
@@ -101,11 +101,9 @@ export class Params extends URLSearchParams {
     }
     // check if its a valid set of entries
     if (
-      is.entries<string, string>(value) &&
-      is.all(
-        (v) => is.entry(v) && is.nonEmptyString(v[0]) && is.string(v[1]),
-        ...value
-      )
+      is.entries<string, string>(value) && is.all((v) => (
+        is.entry(v) && is.nonEmptyString(v[0]) && is.string(v[1])
+      ), ...value)
     ) {
       return true;
     }
@@ -132,7 +130,7 @@ export class Params extends URLSearchParams {
    */
   static parse(
     value: Params.Init,
-    options?: Params.Options
+    options?: Params.Options,
   ): [string, string][] {
     const init = new URLSearchParams();
     if (Params.validate(value)) {
@@ -178,33 +176,33 @@ export class Params extends URLSearchParams {
     return [...init] as [string, string][]; // pass all initialization entries
   }
 
-  static format<T extends Params.Init>(...params: T[]): Params {
+  static format<T extends Params.Init>(
+    ...params: T[]
+  ): Params {
     const paramStringToEntries = (s: string): string[][] =>
-      `${s ?? ""}`
-        .split(/(?<=\w+)([;&])(?=\w+)/)
-        .map((p) => {
-          const [k, v] = p?.split?.(/[=]/, 2).map((s) => decode(s.trim()));
-          return [k, v];
-        })
-        .filter(
-          ([k, v]) =>
-            Boolean(k) && Boolean(v) && v != null && v != "" && k != "&"
-        );
+      `${s ?? ""}`.split(/(?<=\w+)([;&])(?=\w+)/).map((p) => {
+        const [k, v] = p?.split?.(/[=]/, 2).map((s) => decode(s.trim()));
+        return [k, v];
+      }).filter(([k, v]) =>
+        Boolean(k) && Boolean(v) && (v != null && v != "" && k != "&")
+      );
 
-    const p = (params ?? []).reduce((acc, cur) => {
-      const entries: any =
-        typeof cur === "string"
+    const p = (params ?? []).reduce(
+      (acc, cur) => {
+        const entries: any = (typeof cur === "string")
           ? paramStringToEntries(cur)
-          : is.array(cur)
+          : (is.array(cur))
           ? [...cur].filter(Boolean)
-          : cur instanceof URLSearchParams || cur instanceof Params
+          : (cur instanceof URLSearchParams || cur instanceof Params)
           ? [...cur.entries()].filter(Boolean)
           : [...Object.entries(cur ?? {})].filter(Boolean);
-      return {
-        ...acc,
-        ...Object.fromEntries((entries ?? []).filter(Boolean)),
-      };
-    }, {} as Record<string, string>);
+        return {
+          ...acc,
+          ...Object.fromEntries((entries ?? []).filter(Boolean)),
+        };
+      },
+      {} as Record<string, string>,
+    );
 
     return new Params(p).distinct();
   }
@@ -281,12 +279,11 @@ Reflect.defineProperty(Params.prototype, Symbol.for("Deno.customInspect"), {
       iterableLimit: 50,
       trailingComma: true,
     };
-    return `${this.constructor.name} ${inspect(
-      {
+    return `${this.constructor.name} ${
+      inspect({
         ...this,
-      },
-      options
-    )}`;
+      }, options)
+    }`;
   },
 });
 
@@ -318,50 +315,47 @@ export function formatParams<P extends URLSearchParamsInit>(
   ...p: P[]
 ): URLSearchParams {
   const paramStringToEntries = (s: string): string[][] =>
-    `${s ?? ""}`
-      .split(/([:]{2}|[;&])/)
-      .map((p) => {
-        const [k, v] = p?.split?.(/[=]/, 2).map((s) => decode(s.trim()));
-        return [k, v];
-      })
-      .filter(
-        ([k, v]) => Boolean(k) && Boolean(v) && v != null && v != "" && k != "&"
-      );
+    `${s ?? ""}`.split(/([:]{2}|[;&])/).map((p) => {
+      const [k, v] = p?.split?.(/[=]/, 2).map((s) => decode(s.trim()));
+      return [k, v];
+    }).filter(([k, v]) =>
+      Boolean(k) && Boolean(v) && (v != null && v != "" && k != "&")
+    );
 
-  const parameters = (p ?? []).reduce((acc, cur) => {
-    const entries: any =
-      typeof cur === "string"
+  const parameters = (p ?? []).reduce(
+    (acc, cur) => {
+      const entries: any = (typeof cur === "string")
         ? paramStringToEntries(cur)
-        : Array.isArray(cur)
+        : (Array.isArray(cur))
         ? [...cur].filter(Boolean)
-        : cur instanceof URLSearchParams
+        : (cur instanceof URLSearchParams)
         ? [...cur.entries()].filter(Boolean)
         : [...Object.entries(cur ?? {})].filter(Boolean);
-    return {
-      ...acc,
-      ...Object.fromEntries((entries ?? []).filter(Boolean)),
-    };
-  }, {} as Record<string, string>);
+      return {
+        ...acc,
+        ...Object.fromEntries((entries ?? []).filter(Boolean)),
+      };
+    },
+    {} as Record<string, string>,
+  );
 
   const keys = [...new Set(Object.keys(parameters))].sort();
   return new URLSearchParams(
-    keys.filter(Boolean).map((k) => [k, parameters[k]])
+    keys.filter(Boolean).map((k) => [k, parameters[k]]),
   );
 }
 
 export function collectParams<
-  T extends (string | URL | Record<string, unknown>)[]
+  T extends (string | URL | Record<string, unknown>)[],
 >(...sources: T): Params {
   const pathParams = sources.find(is.plainObject);
   const url: URL = new URL(sources.find(is.url) ?? "");
 
-  console.log("pathParams", pathParams);
   is.assert.plainObject<string>(pathParams);
   // janky way to fix some routing issues
   if (pathParams.params == null) {
     if (
-      pathParams.title != null &&
-      Params.pattern.params.test(pathParams.title)
+      pathParams.title != null && Params.pattern.params.test(pathParams.title)
     ) {
       pathParams.params = pathParams.title;
       if (pathParams.subtitle != null) {

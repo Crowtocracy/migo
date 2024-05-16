@@ -31,23 +31,27 @@ if (DEBUG) {
     "%c%s\n",
     "font-weight:bold;color:#8dddff;",
     String.fromCodePoint(0x24dc, 0x20, 0x24d8, 0x20, 0x24d6, 0x20, 0x24de) +
-      "  "
+      "  ",
   );
 }
 
 const handle = {
   /** the workhorse of the whole application: the image handler  */
-  async image(req: Request, _ci: ConnInfo, pathParams: Record<string, string>) {
+  async image(
+    req: Request,
+    _ci: ConnInfo,
+    pathParams: Record<string, string>,
+  ) {
     try {
       const url = new URL(req.url);
-      const type = pathParams?.type ?? "png";
+      const type = (pathParams?.type ?? "png");
 
       // ensure the type is only svg or png. default to png otherwise
       if (!["png", "svg"].includes(type)) {
         const newUrl = new URL(url);
         newUrl.pathname = newUrl.pathname.replace(
           /(?<=\.)([a-z0-9]{1,5})$/i,
-          "png"
+          "png",
         );
         return Response.redirect(newUrl, 301);
       }
@@ -65,9 +69,7 @@ const handle = {
         if (is.response(cached)) {
           return cached;
         }
-      } catch {
-        /* ignore */
-      }
+      } catch { /* ignore */ }
 
       let status = 200;
 
@@ -75,9 +77,9 @@ const handle = {
       headers.set("Last-Modified", new Date().toISOString());
       headers.set("Age", "0");
 
-      const contentType = `image/${
-        type === "png" ? "png" : "svg+xml"
-      }; charset=utf-8`;
+      const contentType = (
+        `image/${type === "png" ? "png" : "svg+xml"}; charset=utf-8`
+      );
 
       // generate the svg graphic
       let body: Uint8Array | string = await generateSVG({ params, type });
@@ -96,83 +98,7 @@ const handle = {
         });
 
         cache?.put?.(cacheKey, responseToCache);
-      } catch {
-        /* ignore */
-      }
-
-      return createResponse(body, {
-        headers,
-        status,
-        params,
-        contentType,
-      });
-    } catch (err) {
-      console.error(err);
-      return createResponse(DEBUG ? err : null, { status: 500 });
-    }
-  },
-  sivImage(req: Request, _ci: ConnInfo, pathParams: Record<string, string>) {
-    try {
-      const url = new URL(req.url);
-      const type = pathParams?.type ?? "png";
-
-      // ensure the type is only svg or png. default to png otherwise
-      if (!["png", "svg"].includes(type)) {
-        const newUrl = new URL(url);
-        newUrl.pathname = newUrl.pathname.replace(
-          /(?<=\.)([a-z0-9]{1,5})$/i,
-          "png"
-        );
-        return Response.redirect(newUrl, 301);
-      }
-
-      // use a normalized set of parameters for more aggressive caching
-      const params = collectParams(url, pathParams);
-      const cacheKey = new URL(url);
-      cacheKey.search = "?" + params.toString();
-
-      let cache: Cache | undefined;
-      try {
-        cache = await caches?.open?.(cacheName || "default");
-        // making use of Deno's new Cache API
-        const cached = await cache?.match?.(cacheKey);
-        if (is.response(cached)) {
-          return cached;
-        }
-      } catch {
-        /* ignore */
-      }
-
-      let status = 200;
-
-      const headers = new Headers();
-      headers.set("Last-Modified", new Date().toISOString());
-      headers.set("Age", "0");
-
-      const contentType = `image/${
-        type === "png" ? "png" : "svg+xml"
-      }; charset=utf-8`;
-
-      // generate the svg graphic
-      let body: Uint8Array | string = await generateSVG({ params, type });
-
-      // rasterize it as a png, if needed
-      if (type === "png") {
-        body = await rasterizeSVG(body);
-        is.assert.uint8Array(body);
-      }
-
-      try {
-        const responseToCache = await createResponse(body, {
-          headers,
-          status: 200,
-          contentType,
-        });
-
-        cache?.put?.(cacheKey, responseToCache);
-      } catch {
-        /* ignore */
-      }
+      } catch { /* ignore */ }
 
       return createResponse(body, {
         headers,
@@ -219,7 +145,6 @@ serve({
   "/": handle.home,
   "/favicon.:type(ico|svg|png)": handle.favicon,
   "/robots.txt": handle.robotsTxt,
-  "/siv/:params:type(png|svg)": handle.sivImage,
   "/:title.:type(png|svg)": handle.image,
   "/:title/:subtitle.:type(png|svg)": handle.image,
   "/:params/:title/:subtitle([^]+?).:type(png|svg)": handle.image,
