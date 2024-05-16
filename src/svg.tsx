@@ -133,7 +133,9 @@ export async function generateSVG({
     subtitleTextAnchor = "middle",
   } = (mergedParams ?? {}) as AllProps;
 
-  params = new Params(mergedParams as Record<string, string>);
+  params = new Params(
+    new URLSearchParams(mergedParams as Record<string, string>)
+  );
   console.log("params in svgfunc", params);
   for (const k in params) {
     if (/(stroke|color)$/i.test(k)) {
