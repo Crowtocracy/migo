@@ -105,8 +105,8 @@ export async function generateSVG({
   const {
     title = "",
     subtitle = "",
-    width = "1280",
-    height = +width / 2,
+    width = "1200",
+    height = "630",
     viewBox = `0 0 ${width} ${height}`,
     bgColor: fill = "#FFFFFF",
     pxRatio = "2",
