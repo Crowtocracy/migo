@@ -147,7 +147,7 @@ serve({
   "/": handle.home,
   "/favicon.:type(ico|svg|png)": handle.favicon,
   "/robots.txt": handle.robotsTxt,
-  "/siv/:icon/:params([^]+?).:type(png|svg)": handle.image,
+  "/siv/:icon.:type(png|svg)": handle.image,
   "/:title.:type(png|svg)": handle.image,
   "/:title/:subtitle.:type(png|svg)": handle.image,
   "/:params/:title/:subtitle([^]+?).:type(png|svg)": handle.image,
