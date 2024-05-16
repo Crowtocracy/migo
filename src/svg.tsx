@@ -114,7 +114,7 @@ export async function generateSVG({
     iconW = "240",
     iconH = iconW,
     iconX = (+width - +iconW) / 2,
-    iconY = +iconH / 3,
+    iconY = (+height - +iconH) / 2,
     iconStroke = "none",
     iconStrokeWidth = "0",
     titleFontSize = "48",
@@ -210,7 +210,7 @@ export async function generateSVG({
       <circle
         cx={+width / 2}
         cy={+height / 2}
-        r={Math.min(+width, +height) / 2}
+        r={Math.min(+width, +height * 0.75) / 2}
         fill="#F0FDFA"
       />
       {iconContents && (
@@ -222,50 +222,6 @@ export async function generateSVG({
           href={"#icon"}
           {...iconProps}
         />
-      )}
-      {(title || subtitle) && (
-        <g>
-          {title && (
-            <text
-              {...{
-                id: "title",
-                x: titleX,
-                y: titleY,
-                "font-size": titleFontSize,
-                "font-family": decode(titleFontFamily),
-                "font-weight": titleFontWeight,
-                fill: titleColor,
-                color: titleColor,
-                stroke: titleStroke,
-                "stroke-width": +titleStrokeWidth,
-                "text-anchor": titleTextAnchor,
-                dominantBaseline: "middle",
-              }}
-            >
-              <tspan>{decode(title!)}</tspan>
-            </text>
-          )}
-          {subtitle && (
-            <text
-              {...{
-                id: "subtitle",
-                x: subtitleX,
-                y: subtitleY,
-                "font-size": subtitleFontSize,
-                "font-family": decode(subtitleFontFamily),
-                "font-weight": subtitleFontWeight,
-                fill: subtitleColor,
-                color: subtitleColor,
-                stroke: subtitleStroke,
-                "stroke-width": subtitleStrokeWidth,
-                "text-anchor": subtitleTextAnchor,
-                dominantBaseline: "middle",
-              }}
-            >
-              <tspan>{decode(subtitle!)}</tspan>
-            </text>
-          )}
-        </g>
       )}
     </svg>
   );
