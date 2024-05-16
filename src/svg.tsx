@@ -204,6 +204,7 @@ export async function generateSVG({
         rx={rx || 0}
       />
       {iconContents && (
+        <use xlink:href="#circle" />
         <use
           width={iconW}
           height={iconH}
