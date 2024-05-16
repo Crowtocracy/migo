@@ -46,19 +46,11 @@ export async function generateIcon(
   if (iconUrl.startsWith("data")) {
     return (
       <defs>
+        <circle cx="360" cy="360" r="360" fill="#F0FDFA" />
         <symbol id="icon" viewBox={viewBox} image-rendering="optimizeQuality">
           <image href={iconUrl} width={"100%"} height={"100%"} />
         </symbol>
-        <style>
-          {`
-            .circle {
-              fill: #F0FDFA; 
-            }
-          `}
-        </style>
       </defs>
-      <circle class="circle" cx="50%" cy="50%" r="50%" />
-      <use xlink:href="#icon" x="0" y="0" width="100%" height="100%" />
     );
   } else {
     if (!iconUrl.startsWith("http")) {
