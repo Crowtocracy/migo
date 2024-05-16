@@ -229,7 +229,7 @@ export async function generateSVG({
             id: "title",
             x: +width / 2,
             y: +height / 2,
-            "font-size": titleFontSize,
+            "font-size": 192,
             "font-family": decode(titleFontFamily),
             "font-weight": titleFontWeight,
             fill: "#0D9488",
