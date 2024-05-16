@@ -84,7 +84,7 @@ export class Params extends URLSearchParams {
     this.#list = []; // wipe all current keys
     this.clear();
     for (const [key, value] of items) {
-      super.append(key, value);
+      super.set(key, value);
     }
     this.#list = [...super.entries()];
   }
@@ -394,10 +394,10 @@ export function collectParams<
   console.log("pathParams.params", pathParams.params);
   const pathParameters = new Params(decode(pathParams?.params));
   const mergedParams = {
+    ...defaultParams,
+    ...pathParams,
     ...Object.fromEntries(pathParameters),
     ...Object.fromEntries(url.searchParams),
-    ...pathParams,
-    ...defaultParams,
   };
 
   const params = new Params(mergedParams);
