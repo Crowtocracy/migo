@@ -43,25 +43,6 @@ export async function generateIcon(
   url.search = "";
   iconUrl = url.href;
   console.log("iconUrl", iconUrl);
-  if (iconUrl.includes("siv:logo")) {
-    console.log("sivLogo found");
-    return (
-      <defs>
-        <symbol id="icon" viewBox={viewBox} image-rendering="optimizeQuality">
-          <text
-            x="50%"
-            y="50%"
-            dominant-baseline="middle"
-            text-anchor="middle"
-            font-size="35"
-            fill="#0D9488"
-          >
-            <tspan>SIV</tspan>
-          </text>
-        </symbol>
-      </defs>
-    );
-  }
 
   if (iconUrl.startsWith("data")) {
     const [minX, minY, width, height] = viewBox.split(" ").map(Number);
@@ -241,6 +222,26 @@ export async function generateSVG({
           href={"#icon"}
           {...iconProps}
         />
+      )}
+      {iconUrl.includes("siv:logo") && (
+        <text
+          {...{
+            id: "title",
+            x: {+width / 2},
+            y: {+height / 2},
+            "font-size": titleFontSize,
+            "font-family": decode(titleFontFamily),
+            "font-weight": titleFontWeight,
+            fill: {"#0D9488"},
+            color: {"#0D9488"},
+            stroke: titleStroke,
+            "stroke-width": +titleStrokeWidth,
+            "text-anchor": titleTextAnchor,
+            dominantBaseline: "middle",
+          }}
+        >
+          <tspan>SIV</tspan>
+        </text>
       )}
     </svg>
   );
