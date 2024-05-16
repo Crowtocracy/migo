@@ -358,26 +358,34 @@ export function collectParams<
   is.assert.plainObject<string>(pathParams);
 
   console.log("pathParams", pathParams);
-  // janky way to fix some routing issues
-  if (pathParams.params == null) {
-    if (
-      pathParams.title != null &&
-      Params.pattern.params.test(pathParams.title)
-    ) {
-      pathParams.params = pathParams.title;
-      if (pathParams.subtitle != null) {
-        pathParams.title = pathParams.subtitle;
+  // Check if fallback starts with "siv/"
+  if (pathParams.fallback?.startsWith("siv/")) {
+    // Remove "siv/" from the start of the string
+    pathParams.params = pathParams.fallback.slice(4);
+  } else {
+    // janky way to fix some routing issues
+    if (pathParams.params == null) {
+      if (
+        pathParams.title != null &&
+        Params.pattern.params.test(pathParams.title)
+      ) {
+        pathParams.params = pathParams.title;
+        if (pathParams.subtitle != null) {
+          pathParams.title = pathParams.subtitle;
+          delete pathParams.subtitle;
+        } else {
+          delete pathParams.title;
+        }
+      } else if (Params.pattern.params.test(pathParams.subtitle)) {
+        pathParams.params = pathParams.subtitle;
         delete pathParams.subtitle;
       } else {
-        delete pathParams.title;
+        pathParams.params = pathParams.title;
       }
-    } else if (Params.pattern.params.test(pathParams.subtitle)) {
-      pathParams.params = pathParams.subtitle;
-      delete pathParams.subtitle;
-    } else {
-      pathParams.params = pathParams.title;
     }
   }
+
+  // Rest of the code...
   /**
    * If path parameters have been provided, combine them with any existing
    * query params,
