@@ -207,6 +207,12 @@ export async function generateSVG({
         height={height}
         rx={rx || 0}
       />
+      <circle
+        cx={+width / 2}
+        cy={+height / 2}
+        r={Math.min(+width, +height) / 2}
+        fill="#F0FDFA"
+      />
       {iconContents && (
         <use
           width={iconW}
