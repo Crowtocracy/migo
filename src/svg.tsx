@@ -49,7 +49,16 @@ export async function generateIcon(
         <symbol id="icon" viewBox={viewBox} image-rendering="optimizeQuality">
           <image href={iconUrl} width={"100%"} height={"100%"} />
         </symbol>
+        <style>
+          {`
+            .circle {
+              fill: #F0FDFA; 
+            }
+          `}
+        </style>
       </defs>
+      <circle class="circle" cx="50%" cy="50%" r="50%" />
+      <use xlink:href="#icon" x="0" y="0" width="100%" height="100%" />
     );
   } else {
     if (!iconUrl.startsWith("http")) {
