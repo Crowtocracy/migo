@@ -402,7 +402,7 @@ export function collectParams<
     ...Object.fromEntries(pathParameters),
     ...Object.fromEntries(url.searchParams),
   };
-
+  console.log("mergedParams", mergedParams);
   const params = new Params(mergedParams);
   console.log("params inside func", params);
   for (const key of url.searchParams.keys()) {
