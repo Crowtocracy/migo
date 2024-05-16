@@ -104,7 +104,7 @@ export async function generateSVG({
     width = "1280",
     height = +width / 2,
     viewBox = `0 0 ${width} ${height}`,
-    bgColor: fill = "#fff",
+    bgColor: fill = "#FFFFFF",
     pxRatio = "2",
     borderRadius: rx = "0",
     iconW = "240",
