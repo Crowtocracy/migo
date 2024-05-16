@@ -42,6 +42,10 @@ export async function generateIcon(
   const url = new URL(String(iconUrl));
   url.search = "";
   iconUrl = url.href;
+  console.log("iconUrl", iconUrl);
+  if (iconUrl.includes("siv:logo")) {
+    console.log("siv logo");
+  }
 
   if (iconUrl.startsWith("data")) {
     const [minX, minY, width, height] = viewBox.split(" ").map(Number);
