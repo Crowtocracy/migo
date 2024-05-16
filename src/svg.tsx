@@ -56,7 +56,7 @@ export async function generateIcon(
             font-size="35"
             fill="#0D9488"
           >
-            SIV
+            <tspan>SIV</tspan>
           </text>
         </symbol>
       </defs>
