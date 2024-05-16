@@ -132,7 +132,7 @@ export async function generateSVG({
   } = (mergedParams ?? {}) as AllProps;
 
   params = new Params(mergedParams as Record<string, string>);
-
+  console.log("params in svgfunc", params);
   for (const k in params) {
     if (/(stroke|color)$/i.test(k)) {
       const color = params.get(k)!;
@@ -148,7 +148,7 @@ export async function generateSVG({
       params.get("iconUrl") ?? params.get("icon") ?? "game-icons:sauropod-head"
     )
   );
-
+  console.log("iconUrl", iconUrl);
   const iconContents = await generateIcon(iconUrl, {
     iconColor,
     iconStroke,
