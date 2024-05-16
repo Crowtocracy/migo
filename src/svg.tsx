@@ -228,9 +228,9 @@ export async function generateSVG({
           {...{
             id: "title",
             x: +width / 2,
-            y: +height / 2,
+            y: +height / 2 + 192 / 2,
             "font-size": 192,
-            "font-family": decode(titleFontFamily),
+            "font-family": "sans-serif",
             "font-weight": titleFontWeight,
             fill: "#0D9488",
             color: "#0D9488",
