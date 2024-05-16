@@ -41,7 +41,7 @@ const handle = {
     try {
       const url = new URL(req.url);
       const type = pathParams?.type ?? "png";
-
+      console.log("type", type);
       // ensure the type is only svg or png. default to png otherwise
       if (!["png", "svg"].includes(type)) {
         const newUrl = new URL(url);
@@ -54,7 +54,7 @@ const handle = {
 
       // use a normalized set of parameters for more aggressive caching
       const params = collectParams(url, pathParams);
-      console.log("params", params);
+
       const cacheKey = new URL(url);
       cacheKey.search = "?" + params.toString();
 
@@ -81,6 +81,7 @@ const handle = {
       }; charset=utf-8`;
 
       // generate the svg graphic
+      console.log("params", params);
       let body: Uint8Array | string = await generateSVG({ params, type });
 
       // rasterize it as a png, if needed

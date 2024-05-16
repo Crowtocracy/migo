@@ -95,7 +95,9 @@ export async function generateSVG({
     ...defaultParams,
     ...params.toJSON(),
   };
-
+  console.log("params at svg start", params);
+  console.log("params.toJSON()", params.toJSON());
+  console.log("mergedParams", mergedParams);
   const {
     title,
     subtitle,
