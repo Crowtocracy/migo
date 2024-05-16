@@ -46,7 +46,6 @@ export async function generateIcon(
   if (iconUrl.startsWith("data")) {
     return (
       <defs>
-        <circle id="circle" cx="360" cy="360" r="360" fill="#F0FDFA" />
         <symbol id="icon" viewBox={viewBox} image-rendering="optimizeQuality">
           <image href={iconUrl} width={"100%"} height={"100%"} />
         </symbol>

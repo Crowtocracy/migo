@@ -46,7 +46,7 @@ export const defaultParams = {
   icon: "noto:t-rex",
   iconW: "240",
   iconH: "240",
-  bgColor: "000000",
+  bgColor: "FFFFFF",
   titleColor: "112233",
   titleFontSize: "64",
   subtitleFontSize: "36",
