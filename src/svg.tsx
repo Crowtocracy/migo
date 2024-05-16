@@ -44,10 +44,14 @@ export async function generateIcon(
   iconUrl = url.href;
 
   if (iconUrl.startsWith("data")) {
+    const [minX, minY, width, height] = viewBox.split(" ").map(Number);
+    const cx = minX + width / 2;
+    const cy = minY + height / 2;
+    const r = Math.min(width, height) / 2;
     return (
       <defs>
         <symbol id="icon" viewBox={viewBox} image-rendering="optimizeQuality">
-          <circle id="circle" cx="360" cy="360" r="360" fill="#F0FDFA" />
+          <circle id="circle" cx="${cx}" cy="${cy}" r="${r}" fill="#F0FDFA" />
           <image href={iconUrl} width={"100%"} height={"100%"} />
         </symbol>
       </defs>
