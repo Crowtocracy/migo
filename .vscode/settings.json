@@ -6,6 +6,9 @@
     "https://deno.land": true,
     "https://x.nest.land": true
   },
+  "[deno]": {
+    "editor.formatOnSave": false
+  },
   "git.enableCommitSigning": true,
   "editor.minimap.enabled": false,
   "terminal.integrated.profiles.linux": {
