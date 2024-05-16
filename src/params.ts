@@ -68,6 +68,7 @@ export class Params extends URLSearchParams {
       return this;
     } else {
       for (const entry of init) {
+        console.log("entry", entry);
         if (Params.validate(entry)) {
           this.list = [...this.list, ...Params.parse(entry)];
         }
