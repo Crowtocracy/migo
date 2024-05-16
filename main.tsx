@@ -51,7 +51,6 @@ const handle = {
         return Response.redirect(newUrl, 301);
       }
 
-      console.log("pathParams from beginning", pathParams);
       // use a normalized set of parameters for more aggressive caching
       const params = collectParams(url, pathParams);
 
@@ -81,7 +80,7 @@ const handle = {
       }; charset=utf-8`;
 
       // generate the svg graphic
-      console.log("params", params);
+
       let body: Uint8Array | string = await generateSVG({ params, type });
 
       // rasterize it as a png, if needed

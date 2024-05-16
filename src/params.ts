@@ -68,7 +68,6 @@ export class Params extends URLSearchParams {
       return this;
     } else {
       for (const entry of init) {
-        console.log("entry", entry);
         if (Params.validate(entry)) {
           this.list = [...this.list, ...Params.parse(entry)];
         }
@@ -143,10 +142,9 @@ export class Params extends URLSearchParams {
         this.pattern.params.test(value)
       ) {
         const params = value.split(this.pattern.groups) ?? [];
-        console.log("params in parse", params);
+
         for (const param of params) {
           const [key, val] = param.split(this.pattern.values);
-          console.log("key,val", key, val);
 
           init.append(key, val);
         }
@@ -361,7 +359,6 @@ export function collectParams<
 
   is.assert.plainObject<string>(pathParams);
 
-  console.log("pathParams", pathParams);
   // Check if fallback starts with "siv/"
 
   // janky way to fix some routing issues

@@ -95,9 +95,8 @@ export async function generateSVG({
     ...defaultParams,
     ...params.toJSON(),
   };
-  // console.log("params at svg start", params);
-  // console.log("params.toJSON()", params.toJSON());
-  // console.log("mergedParams", mergedParams);
+  console.log("params at svg start", params);
+
   const {
     title = "",
     subtitle = "",
@@ -123,7 +122,7 @@ export async function generateSVG({
     subtitleFontWeight = "normal",
     subtitleX = +width / 2,
     subtitleY = +titleY + +subtitleFontSize * 2,
-    titleColor = "#123",
+    titleColor = "#0D9488",
     titleStroke = "none",
     titleStrokeWidth = "0",
     titleTextAnchor = "middle",
@@ -136,7 +135,7 @@ export async function generateSVG({
   params = new Params(
     new URLSearchParams(mergedParams as Record<string, string>)
   );
-  // console.log("params in svgfunc", params);
+  console.log("params in svgfunc", params);
   for (const k in params) {
     if (/(stroke|color)$/i.test(k)) {
       const color = params.get(k)!;
@@ -146,13 +145,13 @@ export async function generateSVG({
 
   let iconColor = params.get("iconColor") ?? titleColor;
   let iconType = "svg";
-  console.log('params.get("icon")', params.get("icon"));
+
   const iconUrl = createIconUrl(
     decode(
       params.get("iconUrl") ?? params.get("icon") ?? "game-icons:sauropod-head"
     )
   );
-  console.log("iconUrl", iconUrl);
+
   const iconContents = await generateIcon(iconUrl, {
     iconColor,
     iconStroke,
