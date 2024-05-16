@@ -391,6 +391,7 @@ export function collectParams<
    * query params,
    * for maximum compatibility and flexibility with different requests.
    */
+  console.log('pathParams.params', pathParams.params)
   const pathParameters = new Params(decode(pathParams?.params));
   const mergedParams = {
     ...defaultParams,
@@ -400,7 +401,7 @@ export function collectParams<
   };
 
   const params = new Params(mergedParams);
-
+  console.log('params inside func', params inside func)
   for (const key of url.searchParams.keys()) {
     const val = decode(url.searchParams.get(key)!);
     if (lowerCase(key).endsWith("color")) {
