@@ -50,11 +50,7 @@ const handle = {
         );
         return Response.redirect(newUrl, 301);
       }
-      if (pathParams?.fallback) {
-        pathParams.fallback = pathParams.fallback
-          .replace(/\/(png|svg)$/, "")
-          .replace(/^siv\//, "");
-      }
+
       console.log("pathParams from beginning", pathParams);
       // use a normalized set of parameters for more aggressive caching
       const params = collectParams(url, pathParams);
@@ -151,7 +147,7 @@ serve({
   "/": handle.home,
   "/favicon.:type(ico|svg|png)": handle.favicon,
   "/robots.txt": handle.robotsTxt,
-  "/siv/:params([^]+?).:type(png|svg)": handle.image,
+  "/siv/:icons/:params([^]+?).:type(png|svg)": handle.image,
   "/:title.:type(png|svg)": handle.image,
   "/:title/:subtitle.:type(png|svg)": handle.image,
   "/:params/:title/:subtitle([^]+?).:type(png|svg)": handle.image,
