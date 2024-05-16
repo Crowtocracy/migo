@@ -54,6 +54,7 @@ const handle = {
 
       // use a normalized set of parameters for more aggressive caching
       const params = collectParams(url, pathParams);
+      console.log("params", params);
       const cacheKey = new URL(url);
       cacheKey.search = "?" + params.toString();
 
