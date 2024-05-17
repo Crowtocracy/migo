@@ -100,7 +100,6 @@ export async function generateSVG({
     ...defaultParams,
     ...params.toJSON(),
   };
-  console.log("params at svg start", params);
 
   const {
     title = "",
@@ -140,7 +139,7 @@ export async function generateSVG({
   params = new Params(
     new URLSearchParams(mergedParams as Record<string, string>)
   );
-  console.log("params in svgfunc", params);
+
   for (const k in params) {
     if (/(stroke|color)$/i.test(k)) {
       const color = params.get(k)!;

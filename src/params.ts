@@ -390,7 +390,7 @@ export function collectParams<
    * query params,
    * for maximum compatibility and flexibility with different requests.
    */
-  console.log("pathParams.params", pathParams.params);
+
   const pathParamsArray = pathParams.params.split("=");
   const pathParameters = new Params({
     [pathParamsArray[0]]: pathParamsArray[1],
@@ -401,9 +401,9 @@ export function collectParams<
     ...Object.fromEntries(pathParameters),
     ...Object.fromEntries(url.searchParams),
   };
-  console.log("mergedParams", mergedParams);
+
   const params = new Params(mergedParams);
-  console.log("params inside func", params);
+
   for (const key of url.searchParams.keys()) {
     const val = decode(url.searchParams.get(key)!);
     if (lowerCase(key).endsWith("color")) {
