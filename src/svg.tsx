@@ -230,7 +230,7 @@ export async function generateSVG({
             x: +width / 2,
             y: +height / 2,
             dy: "0.35em",
-            "font-size": 148,
+            "font-size": 192, // use 148 for square
             "font-family": "sans-serif",
             "font-weight": titleFontWeight,
             fill: "#0D9488",
